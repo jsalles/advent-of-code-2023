@@ -1,39 +1,46 @@
 <img src="./.assets/christmas_ferris.png" width="164">
 
-# 🎄 Advent of Code {year}
+# 🎄 Advent of Code 2023
 
 Solutions for [Advent of Code](https://adventofcode.com/) in [Rust](https://www.rust-lang.org/).
 
 <!--- advent_readme_stars table --->
+
 ## 2023 Results
 
-| Day | Part 1 | Part 2 |
-| :---: | :---: | :---: |
-| [Day 1](https://adventofcode.com/2023/day/1) | ⭐ | ⭐ |
-| [Day 2](https://adventofcode.com/2023/day/2) | ⭐ | ⭐ |
-| [Day 3](https://adventofcode.com/2023/day/3) | ⭐ | ⭐ |
-| [Day 4](https://adventofcode.com/2023/day/4) | ⭐ | ⭐ |
-| [Day 5](https://adventofcode.com/2023/day/5) | ⭐ | ⭐ |
-| [Day 6](https://adventofcode.com/2023/day/6) | ⭐ | ⭐ |
-| [Day 7](https://adventofcode.com/2023/day/7) | ⭐ | ⭐ |
+|                     Day                      | Part 1 | Part 2 |
+| :------------------------------------------: | :----: | :----: |
+| [Day 1](https://adventofcode.com/2023/day/1) |   ⭐   |   ⭐   |
+| [Day 2](https://adventofcode.com/2023/day/2) |   ⭐   |   ⭐   |
+| [Day 3](https://adventofcode.com/2023/day/3) |   ⭐   |   ⭐   |
+| [Day 4](https://adventofcode.com/2023/day/4) |   ⭐   |   ⭐   |
+| [Day 5](https://adventofcode.com/2023/day/5) |   ⭐   |   ⭐   |
+| [Day 6](https://adventofcode.com/2023/day/6) |   ⭐   |   ⭐   |
+| [Day 7](https://adventofcode.com/2023/day/7) |   ⭐   |   ⭐   |
+
 <!--- advent_readme_stars table --->
 
 <!--- benchmarking table --->
+
 ## Benchmarks
 
-| Day | Part 1 | Part 2 |
-| :---: | :---: | :---:  |
-| [Day 1](./src/bin/01.rs) | `81.7µs` | `1.1ms` |
-| [Day 2](./src/bin/02.rs) | `13.0ms` | `13.2ms` |
+|           Day            |  Part 1   |  Part 2   |
+| :----------------------: | :-------: | :-------: |
+| [Day 1](./src/bin/01.rs) | `81.7µs`  |  `1.1ms`  |
+| [Day 2](./src/bin/02.rs) | `13.0ms`  | `13.2ms`  |
 | [Day 3](./src/bin/03.rs) | `287.2µs` | `185.1µs` |
 | [Day 4](./src/bin/04.rs) | `950.2µs` | `985.3µs` |
-| [Day 5](./src/bin/05.rs) | `1.1ms` | `895.3ms` |
+| [Day 5](./src/bin/05.rs) |  `1.1ms`  | `895.3ms` |
 | [Day 6](./src/bin/06.rs) | `992.0ns` | `936.0ns` |
 
 **Total: 926.19ms**
+
 <!--- benchmarking table --->
 
 ---
+
+<details>
+<summary>Template Readme</summary>
 
 ## Template setup
 
@@ -81,7 +88,7 @@ Every [solution](https://github.com/fspoettel/advent-of-code-rust/blob/main/src/
 
 ### Download input & description for a day
 
-> [!IMPORTANT] 
+> [!IMPORTANT]
 > This requires [installing the aoc-cli crate](#configure-aoc-cli-integration).
 
 You can automatically download puzzle inputs and description by either appending the `--download` flag to `scaffold` (e.g. `cargo scaffold 4 --download`) or with the separate `download` command:
@@ -261,15 +268,4 @@ Do you have aoc-specific crate recommendations? [Share them!](https://github.com
 
 -   **Integer overflows:** This template uses 32-bit integers by default because it is generally faster - for example when packed in large arrays or structs - than using 64-bit integers everywhere. For some problems, solutions for real input might exceed 32-bit integer space. While this is checked and panics in `debug` mode, integers [wrap](https://doc.rust-lang.org/book/ch03-02-data-types.html#integer-overflow) in `release` mode, leading to wrong output when running your solution.
 
-## Footnotes
-
-[^1]: The session cookie might expire after a while (~1 month) which causes the downloads to fail. To fix this issue, refresh the `.adventofcode.session` file.
-[^2]: The session cookie might expire after a while (~1 month) which causes the automated workflow to fail. To fix this issue, refresh the AOC_SESSION secret.
-[^3]:
-    <img src="https://user-images.githubusercontent.com/1682504/198838369-453dc22c-c645-4803-afe0-fc50d5a3f00c.png" alt="Set a breakpoint" width="450" />
-
-[^4]:
-    <img alt="Run debugger" src="https://user-images.githubusercontent.com/1682504/198838372-c89369f6-0d05-462e-a4c7-8cd97b0912e6.png" width="450" />
-
-[^5]:
-    <img alt="Inspect debugger state" src="https://user-images.githubusercontent.com/1682504/198838373-36df6996-23bf-4757-9335-0bc4c1db0276.png" width="450" />
+</details>
