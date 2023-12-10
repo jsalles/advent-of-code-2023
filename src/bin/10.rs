@@ -60,7 +60,7 @@ fn get_start_position(mapping: &[Vec<char>]) -> Point {
         .unwrap()
 }
 
-fn get_next_cell(pipe: char, (row, col): Point) -> Vec<Point> {
+fn get_next_cell(pipe: char, (row, col): Point, mapping: &[Vec<char>]) -> Vec<Point> {
     match pipe {
         '|' => vec![(row - 1, col), (row + 1, col)],
         '-' => vec![(row, col - 1), (row, col + 1)],
@@ -68,12 +68,22 @@ fn get_next_cell(pipe: char, (row, col): Point) -> Vec<Point> {
         'J' => vec![(row, col - 1), (row - 1, col)],
         '7' => vec![(row, col - 1), (row + 1, col)],
         'F' => vec![(row, col + 1), (row + 1, col)],
-        'S' => vec![
-            // (row - 1, col),
-            // (row + 1, col),
-            (row, col - 1),
-            // (row, col + 1),
-        ],
+        'S' => {
+            let mut next_cells = Vec::new();
+            if row > 0 && ['|', '7', 'F'].contains(&mapping[row - 1][col]) {
+                next_cells.push((row - 1, col));
+            }
+            if row < mapping.len() - 1 && ['|', 'L', 'J'].contains(&mapping[row + 1][col]) {
+                next_cells.push((row + 1, col));
+            }
+            if col > 0 && ['-', 'L', 'F'].contains(&mapping[row][col - 1]) {
+                next_cells.push((row, col - 1));
+            }
+            if col < mapping[0].len() && ['-', 'J', '7'].contains(&mapping[row][col + 1]) {
+                next_cells.push((row, col + 1));
+            }
+            next_cells
+        }
         _ => unreachable!(),
     }
 }
@@ -101,14 +111,14 @@ fn navigate_pipes(
         return false;
     }
 
-    if ['J', 'L', '|', 'S'].contains(&current_cel) {
+    if ['J', 'L', '|'].contains(&current_cel) {
         mapping[row][col] = '!';
     } else {
         mapping[row][col] = '_';
     }
 
     visited.insert((row, col));
-    for next in get_next_cell(current_cel, (row, col)).iter() {
+    for next in get_next_cell(current_cel, (row, col), mapping).iter() {
         if navigate_pipes(mapping, *next, visited) {
             return true;
         }
