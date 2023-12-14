@@ -1,53 +1,34 @@
+use advent_of_code::helpers::matrix::{read_matrix, transpose, Matrix};
 use itertools::Itertools;
 
 advent_of_code::solution!(11);
 
 pub fn part_one(input: &str) -> Option<usize> {
     static EXPANSION_RATE: usize = 2;
-    let map = parse_input(input);
+    let map = read_matrix(input);
 
     Some(calculate_distances(&map, EXPANSION_RATE))
 }
 
 pub fn part_two(input: &str) -> Option<usize> {
     static EXPANSION_RATE: usize = if cfg!(test) { 100 } else { 1_000_000 };
-    let map = parse_input(input);
+    let map = read_matrix(input);
 
     Some(calculate_distances(&map, EXPANSION_RATE))
 }
 
-fn parse_input(input: &str) -> Vec<Vec<char>> {
-    input
-        .lines()
-        .map(|line| line.chars().collect_vec())
-        .collect_vec()
-}
-
-fn find_rows_without_galaxies(map: &[Vec<char>]) -> Vec<usize> {
+fn find_rows_without_galaxies(map: &Matrix) -> Vec<usize> {
     (0..map.len())
         .filter(|row| map[*row].iter().all(|c| *c != '#'))
         .collect_vec()
 }
 
-fn find_columns_without_galaxies(map: &[Vec<char>]) -> Vec<usize> {
+fn find_columns_without_galaxies(map: &Matrix) -> Vec<usize> {
     let transposed = transpose(map);
     find_rows_without_galaxies(&transposed)
 }
 
-fn transpose(map: &[Vec<char>]) -> Vec<Vec<char>> {
-    let mut transposed = Vec::new();
-    (0..map[0].len()).for_each(|col| {
-        let mut column = Vec::new();
-        (0..map.len()).for_each(|row| {
-            column.push(map[row][col]);
-        });
-        transposed.push(column);
-    });
-
-    transposed
-}
-
-fn find_galaxies(map: &[Vec<char>]) -> Vec<(usize, usize)> {
+fn find_galaxies(map: &Matrix) -> Vec<(usize, usize)> {
     let mut galaxies = Vec::new();
     (0..map.len()).for_each(|row| {
         (0..map[row].len()).for_each(|col| {
@@ -59,7 +40,7 @@ fn find_galaxies(map: &[Vec<char>]) -> Vec<(usize, usize)> {
     galaxies
 }
 
-fn calculate_distances(map: &[Vec<char>], expansion_rate: usize) -> usize {
+fn calculate_distances(map: &Matrix, expansion_rate: usize) -> usize {
     let rows_without_galaxies = find_rows_without_galaxies(map);
     let columns_without_galaxies = find_columns_without_galaxies(map);
 
@@ -86,15 +67,6 @@ fn calculate_distances(map: &[Vec<char>], expansion_rate: usize) -> usize {
             diff_row + diff_col
         })
         .sum()
-}
-
-fn _print_map(map: &[Vec<char>]) {
-    for r in map {
-        for c in r {
-            print!("{}", c);
-        }
-        println!();
-    }
 }
 
 #[cfg(test)]

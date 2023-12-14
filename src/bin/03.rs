@@ -1,13 +1,15 @@
+use advent_of_code::helpers::matrix::{read_matrix, Matrix};
+
 advent_of_code::solution!(3);
 
 pub fn part_one(input: &str) -> Option<u32> {
-    let mut grid_part_1: Vec<Vec<char>> = input.lines().map(|l| l.chars().collect()).collect();
+    let mut grid_part_1: Matrix = read_matrix(input);
     let part1 = count_all_part_numbers(&mut grid_part_1);
     Some(part1)
 }
 
 pub fn part_two(input: &str) -> Option<u32> {
-    let mut grid_part_2: Vec<Vec<char>> = input.lines().map(|l| l.chars().collect()).collect();
+    let mut grid_part_2: Matrix = read_matrix(input);
     let part2 = count_gear_ratios(&mut grid_part_2);
     Some(part2)
 }
@@ -50,7 +52,7 @@ fn check_adjascent_and_diagonals(row: &mut Vec<char>, col: usize) -> Vec<u32> {
     numbers
 }
 
-fn count_all_part_numbers(input: &mut Vec<Vec<char>>) -> u32 {
+fn count_all_part_numbers(input: &mut Matrix) -> u32 {
     let mut result = 0;
     for row in 0..input.len() {
         let mut row_numbers: Vec<u32> = Vec::new();
@@ -74,7 +76,7 @@ fn count_all_part_numbers(input: &mut Vec<Vec<char>>) -> u32 {
     result
 }
 
-fn count_adjacent(input: &Vec<Vec<char>>, row: usize, col: usize) -> u32 {
+fn count_adjacent(input: &Matrix, row: usize, col: usize) -> u32 {
     let mut result = 0;
 
     if row > 0 && input[row - 1][col].is_ascii_digit() {
@@ -107,7 +109,7 @@ fn count_adjacent(input: &Vec<Vec<char>>, row: usize, col: usize) -> u32 {
     result
 }
 
-fn count_gear_ratios(input: &mut Vec<Vec<char>>) -> u32 {
+fn count_gear_ratios(input: &mut Matrix) -> u32 {
     let mut result = 0;
     for row in 0..input.len() {
         for col in 0..input[row].len() {

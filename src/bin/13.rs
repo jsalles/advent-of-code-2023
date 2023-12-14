@@ -1,12 +1,10 @@
-use itertools::Itertools;
+use advent_of_code::helpers::matrix::{read_matrices, transpose, Matrix};
 
 advent_of_code::solution!(13);
 
-type Matrix = Vec<Vec<char>>;
-
 pub fn part_one(input: &str) -> Option<usize> {
     let allowed_differences = 0;
-    let patterns = parse_input(input);
+    let patterns = read_matrices(input);
 
     let result = patterns
         .iter()
@@ -21,7 +19,7 @@ pub fn part_one(input: &str) -> Option<usize> {
 
 pub fn part_two(input: &str) -> Option<usize> {
     let expected_differences = 1;
-    let patterns = parse_input(input);
+    let patterns = read_matrices(input);
 
     let result = patterns
         .iter()
@@ -34,19 +32,7 @@ pub fn part_two(input: &str) -> Option<usize> {
     Some(result)
 }
 
-fn parse_input(input: &str) -> Vec<Matrix> {
-    input
-        .split("\n\n")
-        .map(|pattern| {
-            pattern
-                .lines()
-                .map(|line| line.chars().collect_vec())
-                .collect_vec()
-        })
-        .collect_vec()
-}
-
-fn find_mirror_row(pattern: &[Vec<char>], expected_differences: usize) -> usize {
+fn find_mirror_row(pattern: &Matrix, expected_differences: usize) -> usize {
     let mut total_differences;
     for row in 1..pattern.len() {
         let first_half = &pattern[0..row];
@@ -71,30 +57,8 @@ fn find_mirror_row(pattern: &[Vec<char>], expected_differences: usize) -> usize 
     0
 }
 
-fn transpose(map: &[Vec<char>]) -> Vec<Vec<char>> {
-    let mut transposed = Vec::new();
-    (0..map[0].len()).for_each(|col| {
-        let mut column = Vec::new();
-        (0..map.len()).for_each(|row| {
-            column.push(map[row][col]);
-        });
-        transposed.push(column);
-    });
-
-    transposed
-}
-
 fn count_differences(first: &[char], second: &[char]) -> usize {
     (0..first.len()).filter(|i| first[*i] != second[*i]).count()
-}
-
-fn _print_map(map: &[Vec<char>]) {
-    for r in map {
-        for c in r {
-            print!("{}", c);
-        }
-        println!();
-    }
 }
 
 #[cfg(test)]

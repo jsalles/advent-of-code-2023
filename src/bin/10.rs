@@ -1,5 +1,6 @@
 use std::collections::HashSet;
 
+use advent_of_code::helpers::matrix::{read_matrix, Matrix};
 use itertools::Itertools;
 
 advent_of_code::solution!(10);
@@ -7,7 +8,7 @@ advent_of_code::solution!(10);
 type Point = (usize, usize);
 
 pub fn part_one(input: &str) -> Option<usize> {
-    let mut mapping = parse_input(input);
+    let mut mapping = read_matrix(input);
     let starting_position = get_start_position(&mapping);
 
     let mut visited = HashSet::new();
@@ -17,7 +18,7 @@ pub fn part_one(input: &str) -> Option<usize> {
 }
 
 pub fn part_two(input: &str) -> Option<u32> {
-    let mut mapping = parse_input(input);
+    let mut mapping = read_matrix(input);
     let starting_position = get_start_position(&mapping);
 
     let mut visited = HashSet::new();
@@ -35,19 +36,11 @@ pub fn part_two(input: &str) -> Option<u32> {
             }
         });
     });
-    // print_mapping(&mapping);
 
     Some(total_count)
 }
 
-fn parse_input(input: &str) -> Vec<Vec<char>> {
-    input
-        .lines()
-        .map(|line| line.chars().collect_vec())
-        .collect_vec()
-}
-
-fn get_start_position(mapping: &[Vec<char>]) -> Point {
+fn get_start_position(mapping: &Matrix) -> Point {
     mapping
         .iter()
         .enumerate()
@@ -60,7 +53,7 @@ fn get_start_position(mapping: &[Vec<char>]) -> Point {
         .unwrap()
 }
 
-fn get_next_cell(pipe: char, (row, col): Point, mapping: &[Vec<char>]) -> Vec<Point> {
+fn get_next_cell(pipe: char, (row, col): Point, mapping: &Matrix) -> Vec<Point> {
     match pipe {
         '|' => vec![(row - 1, col), (row + 1, col)],
         '-' => vec![(row, col - 1), (row, col + 1)],
@@ -88,20 +81,7 @@ fn get_next_cell(pipe: char, (row, col): Point, mapping: &[Vec<char>]) -> Vec<Po
     }
 }
 
-fn _print_mapping(mapping: &[Vec<char>]) {
-    for r in mapping.iter() {
-        for c in r.iter() {
-            print!("{}", c);
-        }
-        println!();
-    }
-}
-
-fn navigate_pipes(
-    mapping: &mut Vec<Vec<char>>,
-    (row, col): Point,
-    visited: &mut HashSet<Point>,
-) -> bool {
+fn navigate_pipes(mapping: &mut Matrix, (row, col): Point, visited: &mut HashSet<Point>) -> bool {
     let current_cel = mapping[row][col];
     if current_cel == 'S' && !visited.is_empty() {
         // prevent shortcutting back to start
