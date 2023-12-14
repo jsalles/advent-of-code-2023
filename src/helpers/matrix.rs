@@ -34,7 +34,14 @@ pub fn transpose(map: &Matrix) -> Matrix {
     transposed
 }
 
-pub fn print_map(map: &Matrix) {
+pub fn reverse_rows(matrix: &Matrix) -> Matrix {
+    matrix
+        .iter()
+        .map(|row| row.iter().copied().rev().collect_vec())
+        .collect_vec()
+}
+
+pub fn print_matrix(map: &Matrix) {
     for r in map {
         for c in r {
             print!("{}", c);
