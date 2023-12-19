@@ -95,14 +95,14 @@ pub fn part_two(input: &str) -> Option<usize> {
     result
 }
 
-fn energize_cells(map: &[Cell], trail: &HashSet<Cell>) {
+fn _energize_cells(map: &[Cell], trail: &HashSet<Cell>) {
     let length: usize = if cfg!(test) { 10 } else { 110 };
     (0..length).for_each(|row| {
         (0..length).for_each(|col| {
             let cell = map
                 .iter()
                 .find(|item| item.col == col && item.row == row)
-                .expect(&format!("expected to find item in map {} {}", row, col));
+                .unwrap_or_else(|| panic!("expected to find item in map {} {}", row, col));
             let value = if trail.contains(cell) {
                 if cell.value == '.' {
                     '#'
